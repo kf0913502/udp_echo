@@ -6,7 +6,7 @@
 #include <sys/time.h>
 #include <vector>
 #include <sys/fcntl.h>
-
+#include <cstring>
 
 double getCurTimeInMs() {
     struct timeval tp;
@@ -181,7 +181,12 @@ int server(unsigned short port)
     }
 }
 int main(int argc, char *argv[]) {
-    if (strcmp(argv[1],"-c") == 0)
+
+    if (argc == 1)
+    {
+        std::cerr << "Invalid arguments! Valid arguments are -c <dest_ip> <dest_port> <n_packets> for client mode OR -s <listen_port> for server mode";
+    }
+   else  if (strcmp(argv[1],"-c") == 0)
     {
         std::cout << "client mode" << std::endl;
         if (argc != 5)
