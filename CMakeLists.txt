@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.23)
-project(echo)
+cmake_minimum_required(VERSION 3.16)
+project(udp_echo)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(echo main.cpp)
+add_executable(udp_echo main.cpp)
