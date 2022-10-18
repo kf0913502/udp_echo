@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <algorithm>
 
 int client(int dstIp, short dstPort, unsigned int nPackets)
 {
