@@ -16,7 +16,7 @@
 
 
 
-double getCurTimeInMs() {
+extern "C" double getCurTimeInMs() {
     struct timeval tp;
     int result = gettimeofday(&tp, NULL);
     if (result == -1)
@@ -27,7 +27,7 @@ double getCurTimeInMs() {
 }
 
 
-int setSckTimeout(int fd, int timeoutSec)
+extern "C" int setSckTimeout(int fd, int timeoutSec)
 {
     struct timeval tv;
     tv.tv_sec = timeoutSec;
@@ -38,7 +38,7 @@ int setSckTimeout(int fd, int timeoutSec)
 
 }
 
-unsigned int createSck()
+extern "C" unsigned int createSck()
 {
     int fd = socket(AF_INET, SOCK_DGRAM, 0);
     fcntl(fd, F_SETFL, O_NONBLOCK); // make socket non-blocking
@@ -46,7 +46,7 @@ unsigned int createSck()
 }
 
 //use 0 in ifaceIp to listen to all local interfaces
-int bindSck(int fd, int ifaceIp, short port)
+extern "C" int bindSck(int fd, int ifaceIp, short port)
 {
 
     struct sockaddr_in servaddr;  /*  socket address structure  */
@@ -61,7 +61,7 @@ int bindSck(int fd, int ifaceIp, short port)
 }
 
 
-int sckWrite(int fd, int dstIp, short dstPort, char * data, int len)
+extern "C" int sckWrite(int fd, int dstIp, short dstPort, char * data, int len)
 {
     struct msghdr msg{};
     iovec vec{};
@@ -90,7 +90,7 @@ int sckWrite(int fd, int dstIp, short dstPort, char * data, int len)
 }
 
 
-int sckRead(int fd, char * data, int len, int * srcIp, short * srcPort)
+extern "C" int sckRead(int fd, char * data, int len, int * srcIp, short * srcPort)
 {
     sockaddr_in srcAddress{};
     unsigned int sockAddrLen = sizeof(srcAddress);
@@ -109,3 +109,4 @@ int sckRead(int fd, char * data, int len, int * srcIp, short * srcPort)
     return result;
 
 }
+
