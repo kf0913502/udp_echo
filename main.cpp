@@ -7,6 +7,8 @@
 #include <vector>
 #include <sys/fcntl.h>
 #include <cstring>
+#include <algorithm>
+
 
 double getCurTimeInMs() {
     struct timeval tp;
@@ -92,7 +94,7 @@ int sckRead(int fd, char * data, int len, int * srcIp, short * srcPort)
     do {
         result = recvfrom(fd, (void *) data, len, 0, (sockaddr *) (&srcAddress),
                           (socklen_t *) &sockAddrLen);
-    }while(result < 0 && errno == 35);
+    }while(result < 0 && (errno == 35 || errno == 11)); //35 and 11 are error codes for is Resource Not Available on MacOS and Linux respectively
 
 
     *srcIp = ntohl(srcAddress.sin_addr.s_addr);
@@ -142,6 +144,7 @@ int client(int dstIp, short dstPort, unsigned int nPackets)
 
     }
 
+    return 0;
 
 
 
@@ -179,6 +182,7 @@ int server(unsigned short port)
         sckWrite(fd,srcIp,srcPort,data,1);
 
     }
+
 }
 int main(int argc, char *argv[]) {
 
